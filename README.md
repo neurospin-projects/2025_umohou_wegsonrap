@@ -1,14 +1,19 @@
-# 2025_umohou_wegsonrap
-# Build the tools
+# An re-worked example of processing on DNAnexus RAP
 
-The scripts used to elaborate the GWAS_AD_PROXI have to be prepared first
+## Introduction
+What is presented here is derived from the original work from the "Science Corner of UKBiobank RAP documentation": [GWAS guide using Alzheimer's disease](https://dnanexus.gitbook.io/uk-biobank-rap/science-corner/gwas-using-alzheimers-disease).
+ 
+ We intend to clarify the different parts of the script by separating the preparation of the data required for processing, from the processing itself. This can be read in the two scripts:
+ - rap_gwas/prerequisites/install_gwas_ad_proxy.sh
+ - rap_gwas/prerequisites/batch_gwas_ad_proxy.sh
 
-The refence for this works is from **dnanexus.github.io**: [gwas_on_adbyproxy](https://dnanexus.gitbook.io/uk-biobank-rap/science-corner/gwas-using-alzheimers-disease).
+## Rationale
+The reworked example covers the situation where the phenotype has to be extracted from the tabular data and tentatively associated with genetics.
 
-4 parts can be distinguished in the document: 
+Four parts can be distinguished in the original [document](https://dnanexus.gitbook.io/uk-biobank-rap/science-corner/gwas-using-alzheimers-disease): 
 1. A notebook  (using jupyter-sparkl kernel) that would interact with RAP-central to 
    1. get information from the sql (tabular) data and 
-   1. the s3 data-dictionary file
+   2. the s3 data-dictionary file
 2. A WDL Workflow data language script that implement the liftover
 3. A SwissArmyKnife list of commands to perform QC
 4. A dx run call to the Regenie App (available from RAP-Central)
@@ -16,15 +21,56 @@ The refence for this works is from **dnanexus.github.io**: [gwas_on_adbyproxy](h
 
 The objective is to wrap-up in a single script those 4 steps that currently run using heterogeneous interfaces.
 
-## Build two Apps to replace Step1 above
+## How to extract a phenotype and run a gwas
 
-See [howto build an app](https://academy.dnanexus.com/buildingapplets/python/python_wc) from dnanexus documentation.
+### Install and run the pixi (python) environment
+To execute these scripts, you need to have a regular acces to the DNAnexus RAP system that come along with a regular UK Biobank regular project.
+
+Have a few tools installed:
+- pixi (see [here](https://pixi.sh/dev/installation/)]),
+- Java should be installed too.
+
+You may now clone the project.
+
+```bash
+# git clone this repo
+git clone https://github.com/neurospin-projects/2025_umohou_wegsonrap.git
+
+# start the pixi env
+pixi shell --manifest-path ./2025_umohou_wegsonrap/envs/dxtoolkit/pixi.toml 
+
+# Finalize the system tools installation : jq and dxCompiler !
+# will install them in  
+sh ./2025_umohou_wegsonrap/utils/isntaller.sh
+```
+
+### Set important environment variables:
+Two variables are required to execute correctly the scripts of the reworked code:
+- **DIST_INSTALL**: the path to cloned repo entry
+- **ROOT_INSTALL**: the path to the place where you will build the local resources required to interact with the process that will run on the UKBiobank-RAP.
+
+```bash
+export DIST_INSTALL=./2025_umohou_wegsonrap/rap_gwas
+export ROOT_INSTALL=/tmp/alz_pheno
+
+mkdir $ROOT_INSTALL
+```
+### Instantiate the resources required
+
+The code to run is below. Please execute the different step of this file first.
+
+```bash
+sh $DIST_INSTALL/prerequisites/install_gwas_ad_proxy.sh
+```
+
+Two user defined apps are used and there creation is described here and coded in the script. See [howto build an app](https://academy.dnanexus.com/buildingapplets/python/python_wc) from dnanexus documentation.
+
+A third ndanexus app is also used: table-exporter.
+
+<details><summary>Expand for details the user define apps: ns-app-selectfield and ns-app-getadproxy</summary>
 
 
-### ns-app-selectfields
-
-<details><summary>Expand for details: ns-app-selectfield</summary>
-
+#### ns-app-selectfields
 
 This app will manage the query of the data-dictionary file available from RAP-central. The data disctionnary starts from the "datasource" which is the "refreshable" view of the UK Biobank data.
 
@@ -110,11 +156,11 @@ ls
 $DIST_INSTALL/prerequisites/build-ns-app-selectfield.sh ns-app-selectfiled
 # reply applet-id applet-XXXXXXXXXXXXXXXXXXXXXXXXXX
 ```
-</details>
 
-### ns-app-getadproxy
 
-<details><summary>Expand for details: ns-app-getadproxy</summary>
+#### ns-app-getadproxy
+
+
 
 This app will interpret the result of a table-export csv file ouput. This app will interpret the existence of AD status in ascending of a given persons (their father or mother) to proxyfy an AD risk.
 
@@ -167,3 +213,14 @@ And fix the regionalOptions with
 
 
 </details>
+
+### Run the batch
+
+This shell chain all the four steps described in the original document smoothly. All the resources are ready to be either uploaded or run in your project.
+
+
+```bash
+sh $DIST_INSTALL/prerequisites/batch_gwas_ad_proxy.sh
+```
+
+Please consider running each part to understand the different articulations.
