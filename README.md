@@ -1,4 +1,4 @@
-# An re-worked example of processing on DNAnexus RAP
+# A re-worked example of GWAS on DNAnexus RAP
 
 ## Introduction
 What is presented here is derived from the original work from the "Science Corner of UKBiobank RAP documentation": [GWAS guide using Alzheimer's disease](https://dnanexus.gitbook.io/uk-biobank-rap/science-corner/gwas-using-alzheimers-disease).
