@@ -214,7 +214,7 @@ And fix the regionalOptions with
 
 </details>
 
-#### Run the batch
+### Run the batch
 
 This shell chain all the four steps described in the original document smoothly. All the resources are ready to be either uploaded or run in your project.
 
