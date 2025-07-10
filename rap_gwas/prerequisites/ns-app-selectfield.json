@@ -1,0 +1,48 @@
+{
+    "name": "ns-app-selectfield", 
+    "title": "Prolog for AD by proxy computing",  
+    "summary": "Prolog for AD by proxy computing",
+    "details": {        
+              "contactEmail": "vincent.frouin@cea.fr" 
+                },   
+    "version": "0.0.1", 
+    "inputSpec": [
+      {
+        "name": "outprefix",
+        "class": "string",
+        "optional": false,
+        "help": ""
+      },
+      {
+        "name": "output_folder",
+        "class": "string",
+        "optional": false,
+        "help": ""
+      }
+    ],
+    "outputSpec": [
+      {
+        "name": "outputfile",
+        "class": "file"
+      }
+    ],
+    "runSpec": {
+      "execDepends": [
+        {"name": "pandas",
+         "package_manager": "pip"},
+        {"name": "matplotlib",
+          "package_manager": "pip"},
+        {"name": "pandas-stubs",
+           "package_manager": "pip"}
+      ]
+    },
+  "regionalOptions": {
+    "aws:eu-west-2": {
+      "systemRequirements": {
+        "*": {
+          "instanceType": "mem1_ssd1_v2_x16"
+        }
+      }
+    }
+  }
+}

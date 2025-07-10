@@ -1,0 +1,22 @@
+#!/bin/env bash
+
+# parse parameter
+# io descrition json file: wil impact the dxApp.json and the src/app.py code
+# module install json file : describe the add on to install
+
+
+
+# Delete scories
+
+
+# Invoke app-wizard with the input description file 
+dx-app-wizard $@ << EOF
+Python
+y
+y
+EOF
+
+
+# Fix the dxapp.json with correct regional values
+
+# Fix the dxapp.json with  pip install records
