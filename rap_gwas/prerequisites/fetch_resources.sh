@@ -70,6 +70,7 @@ fi
 # mkdir -p $installdir/resources
 
 #### Installing cmd
+mkdir -p $installdir/resources
 liftover_wdl_install $installdir/resources
 reference_fastagz_install $installdir/resources
 ucsc_chain_install $installdir/resources

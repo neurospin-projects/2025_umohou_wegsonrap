@@ -21,57 +21,58 @@ fi
 green "Step1"
 green "====="
 #############
-    green "Creating ns-app-selectfield"
-    mkdir -p $ROOT_INSTALL/scripts
-    cd $ROOT_INSTALL/scripts
-    rm -rf $ROOT_INSTALL/scripts/ns-app-selectfield
+green "Creating ns-app-selectfield"
+mkdir -p $ROOT_INSTALL/scripts
+cd $ROOT_INSTALL/scripts
+rm -rf $ROOT_INSTALL/scripts/ns-app-selectfield
 
-    ## Invoke dx-app-wizard with sidecar ns-app-selectfield.json to specify output input
-    dx-app-wizard --json-file $DIST_INSTALL/prerequisites/ns-app-selectfield.json << EOF > /dev/null
-    ns-app-selectfield
-    0.0.1
-    20m
-    Python
-    y
-    y
-    mem1_ssd1_v2_x16
-    EOF
-    green "   ns-app-selectfiled created from wizard with specified input/ouput"
+## Invoke dx-app-wizard with sidecar ns-app-selectfield.json to specify output input
+dx-app-wizard --json-file $DIST_INSTALL/prerequisites/ns-app-selectfield.json << EOF1 > /dev/null
+ns-app-selectfield
+0.0.1
+20m
+Python
+y
+y
+mem1_ssd1_v2_x16
+EOF1
 
-    ## patch the code .py
-    cp $DIST_INSTALL/prerequisites/ns-app-selectfield_template.py \
-        $ROOT_INSTALL/scripts/ns-app-selectfield/src/ns-app-selectfield.py
-    green "   src/ns-app-selectfield.py  code patched"
-    ## patch the dxApp.json
-    $DIST_INSTALL/prerequisites/patch_app.py ns-app-selectfield
-    green "   dxApp.json  patched from ns-app-slectfield.json"
+green "   ns-app-selectfiled created from wizard with specified input/ouput"
+
+## patch the code .py
+cp $DIST_INSTALL/prerequisites/ns-app-selectfield_template.py \
+    $ROOT_INSTALL/scripts/ns-app-selectfield/src/ns-app-selectfield.py
+green "   src/ns-app-selectfield.py  code patched"
+## patch the dxApp.json
+$DIST_INSTALL/prerequisites/patch_app.py ns-app-selectfield
+green "   dxApp.json  patched from ns-app-slectfield.json"
 
 
-    #############
-    green "Creating ns-app-getadproxy"
-    mkdir -p $ROOT_INSTALL/scripts
-    cd $ROOT_INSTALL/scripts
-    rm -rf $ROOT_INSTALL/scripts/ns-app-getadproxy
+#############
+green "Creating ns-app-getadproxy"
+mkdir -p $ROOT_INSTALL/scripts
+cd $ROOT_INSTALL/scripts
+rm -rf $ROOT_INSTALL/scripts/ns-app-getadproxy
 
-    ## Invoke dx-app-wizard with sidecar ns-app-selectfield.json to specify output input
-    dx-app-wizard --json-file $DIST_INSTALL/prerequisites/ns-app-getadproxy.json << EOF > /dev/null
-    ns-app-getadproxy
-    0.0.1
-    20m
-    Python
-    y
-    y
-    mem1_ssd1_v2_x16
-    EOF
-    green "   ns-app-getadproxy created from wizard with specified input/ouput"
+## Invoke dx-app-wizard with sidecar ns-app-selectfield.json to specify output input
+dx-app-wizard --json-file $DIST_INSTALL/prerequisites/ns-app-getadproxy.json << EOF2 > /dev/null
+ns-app-getadproxy
+0.0.1
+20m
+Python
+y
+y
+mem1_ssd1_v2_x16
+EOF2
+green "   ns-app-getadproxy created from wizard with specified input/ouput"
 
-    ## patch the code .py
-    cp $DIST_INSTALL/prerequisites/ns-app-getadproxy_template.py \
-        $ROOT_INSTALL/scripts/ns-app-getadproxy/src/ns-app-getadproxy.py
-    green "   src/ns-app-getadproxy.py  code patched"
-    ## patch the dxApp.json
-    $DIST_INSTALL/prerequisites/patch_app.py ns-app-getadproxy
-    green "   dxApp.json  patched from ns-app-getadproxy.json"
+## patch the code .py
+cp $DIST_INSTALL/prerequisites/ns-app-getadproxy_template.py \
+    $ROOT_INSTALL/scripts/ns-app-getadproxy/src/ns-app-getadproxy.py
+green "   src/ns-app-getadproxy.py  code patched"
+## patch the dxApp.json
+$DIST_INSTALL/prerequisites/patch_app.py ns-app-getadproxy
+green "   dxApp.json  patched from ns-app-getadproxy.json"
 
 
 
