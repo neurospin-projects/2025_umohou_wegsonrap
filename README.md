@@ -37,7 +37,7 @@ You may now clone the project.
 git clone https://github.com/neurospin-projects/2025_umohou_wegsonrap.git
 
 # start the pixi env
-pixi shell --manifest-path ./2025_umohou_wegsonrap/envs/dxtoolkit/pixi.toml 
+pixi shell --manifest-path <gitdir>/2025_umohou_wegsonrap/envs/dxtoolkit/pixi.toml 
 
 # Finalize the system tools installation : jq and dxCompiler !
 # will install them in  
@@ -50,7 +50,7 @@ Two variables are required to execute correctly the scripts of the reworked code
 - **ROOT_INSTALL**: the path to the place where you will build the local resources required to interact with the process that will run on the UKBiobank-RAP.
 
 ```bash
-export DIST_INSTALL=./2025_umohou_wegsonrap/rap_gwas
+export DIST_INSTALL=<gitdir>/2025_umohou_wegsonrap/rap_gwas
 export ROOT_INSTALL=/tmp/alz_pheno
 
 mkdir $ROOT_INSTALL
@@ -60,7 +60,7 @@ mkdir $ROOT_INSTALL
 The code to run is below. Please execute the different step of this file first.
 
 ```bash
-sh $DIST_INSTALL/prerequisites/install_gwas_ad_proxy.sh
+sh $DIST_INSTALL/install_gwas_ad_proxy.sh
 ```
 
 Two user defined apps are used and there creation is described here and coded in the script. See [howto build an app](https://academy.dnanexus.com/buildingapplets/python/python_wc) from dnanexus documentation.
@@ -220,7 +220,7 @@ This shell chain all the four steps described in the original document smoothly.
 
 
 ```bash
-sh $DIST_INSTALL/prerequisites/batch_gwas_ad_proxy.sh
+sh $DIST_INSTALL/batch_gwas_ad_proxy.sh
 ```
 
 Please consider running each part to understand the different articulations.
