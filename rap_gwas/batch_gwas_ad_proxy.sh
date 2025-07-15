@@ -29,6 +29,7 @@ dx run --priority high $appret -itabexport_with_icd="$TMPDIR/raw_extract.csv" -i
 
 # Step2 
 #######
+    # exectution time : 17 - 18 hours
 if dx find data --name "ukb_c1-22_hg38_merged.bim" --folder "/commons/references"  --brief | grep -q .; then
     echo "liftover hg38 files version already exist. Skip this step";
 else
@@ -54,17 +55,19 @@ fi
 #To perform the quality control step on both array genotype data and WES data
     # For array genotype data with plink
     # -----------------------
+    # exectution time : 10 min
     nproc=8
     dx run app-swiss-army-knife  \
-        -iin="/commons/references/ukb_c1-22_hg38_merged.bim" \
-        -iin="/commons/references/ukb_c1-22_hg38_merged.bed" \
-        -iin="/commons/references/ukb_c1-22_hg38_merged.fam" \
+        -iin="/commons/references/hg38_liftover/ukb_c1-22_hg38_merged.bim" \
+        -iin="/commons/references/hg38_liftover/ukb_c1-22_hg38_merged.bed" \
+        -iin="/commons/references/hg38_liftover/ukb_c1-22_hg38_merged.fam" \
         -icmd="plink2 --bfile ukb_c1-22_hg38_merged --out final_array_snps_CRCh38_qc_pass --mac 100 --maf 0.01 --hwe 1e-15 --mind 0.1 --geno 0.1 --write-snplist --write-samples --no-id-header --threads $(nproc)" \
         --destination "$TMPDIR/" --priority high -y --watch
 
 
     # For WES data with bgens_qc.wdl
     # ------------
+    # exectution time : 60 min
     # First generate the json file meta information for the pipeline 
     $DIST_INSTALL/prerequisites/generate_bgens_qc_input_json.py -d $ROOT_INSTALL/definitions -r $TMPDIR -p ad_risk_by_proxy_wes.phe
     ret=$(dxCompiler compile  $ROOT_INSTALL/resources/bgens_qc.wdl -inputs $ROOT_INSTALL/definitions/bgens_qc_input.json -archive -folder "$TMPDIR/")
@@ -73,6 +76,7 @@ fi
 
 # Step4 
 #######
+    # exectution time : 6 hours
 
 # We perform this part in only one step because if we wanted to do it in two steps, the second one would require a set of three files(bgen, bgen.bgi, sample) 
 #by chromosome, meaning that we would run the code 22 times.
